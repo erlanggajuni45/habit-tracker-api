@@ -1,25 +1,25 @@
 import { Router } from 'express'
 
-const router = Router()
+const habitRoutes = Router()
 
-router.get('/', (req, res) => {
+habitRoutes.get('/', (req, res) => {
   res.json({ message: 'habits' })
 })
 
-router.get('/:id', (req, res) => {
+habitRoutes.get('/:id', (req, res) => {
   res.json({ message: 'got one habit' })
 })
 
-router.post('/', (req, res) => {
+habitRoutes.post('/', (req, res) => {
   res.json({ message: 'created habit' }).status(201)
 })
 
-router.delete('/:id', (req, res) => {
+habitRoutes.delete('/:id', (req, res) => {
   res.json({ message: 'deleted habit' })
 })
 
-router.post('/:id/complete', (req, res) => {
+habitRoutes.post('/:id/complete', (req, res) => {
   res.json({ message: 'completed habit' }).status(201)
 })
 
-export default router
+export default habitRoutes

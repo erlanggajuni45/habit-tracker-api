@@ -1,21 +1,21 @@
 import { Router } from 'express'
 
-const router = Router()
+const userRoutes = Router()
 
-router.get('/', (req, res) => {
+userRoutes.get('/', (req, res) => {
   res.json({ message: 'users' }).status(200)
 })
 
-router.get('/:id', (req, res) => {
+userRoutes.get('/:id', (req, res) => {
   res.json({ message: 'got user' })
 })
 
-router.put('/:id', (req, res) => {
+userRoutes.put('/:id', (req, res) => {
   res.json({ message: 'user updated' })
 })
 
-router.delete('/:id', (req, res) => {
+userRoutes.delete('/:id', (req, res) => {
   res.json({ message: 'user deleted' })
 })
 
-export default router
+export default userRoutes

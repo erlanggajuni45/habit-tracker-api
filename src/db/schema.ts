@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm'
 import {
   boolean,
   integer,
@@ -31,4 +32,14 @@ export const habits = pgTable('habits', {
   isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
+export const entries = pgTable('entries', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  habitId: uuid('habit_id')
+    .references(() => habits.id, { onDelete: 'cascade' })
+    .notNull(),
+  completionDate: timestamp('completion_date').defaultNow().notNull(),
+  note: text('note'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 })

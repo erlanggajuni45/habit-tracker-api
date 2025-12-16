@@ -1,4 +1,12 @@
-import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import {
+  boolean,
+  integer,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+  varchar,
+} from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -7,6 +15,20 @@ export const users = pgTable('users', {
   password: varchar('password', { length: 255 }).notNull(),
   firstName: varchar('first_name', { length: 50 }),
   lastName: varchar('last_name', { length: 50 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
+export const habits = pgTable('habits', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id')
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
+  name: varchar('name', { length: 100 }).notNull(),
+  description: text('description'),
+  frequency: varchar('frequency', { length: 20 }).notNull(),
+  targetCount: integer('target_count').default(1),
+  isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })

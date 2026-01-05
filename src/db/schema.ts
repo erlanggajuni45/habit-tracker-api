@@ -69,3 +69,43 @@ export const habitTags = pgTable('habit_tags', {
     .notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
+
+// Users can have many habits
+export const userRelations = relations(users, ({ many }) => ({
+  habits: many(habits),
+}))
+
+// Habits belong to one user, have many entries and tags
+export const habitRelations = relations(habits, ({ one, many }) => ({
+  user: one(users, {
+    fields: [habits.userId],
+    references: [users.id],
+  }),
+  entries: many(entries),
+  habitTags: many(habitTags),
+}))
+
+// Entries belong to one habit
+export const entriesRelations = relations(entries, ({ one }) => ({
+  habit: one(habits, {
+    fields: [entries.habitId],
+    references: [habits.id],
+  }),
+}))
+
+// Tags can be on many habits
+export const tagsRelations = relations(tags, ({ many }) => ({
+  habits: many(tags),
+}))
+
+// Junction table relations
+export const habitTagsRelations = relations(habitTags, ({ one }) => ({
+  habit: one(habits, {
+    fields: [habitTags.habitId],
+    references: [habits.id],
+  }),
+  tag: one(tags, {
+    fields: [habitTags.tagId],
+    references: [tags.id],
+  }),
+}))

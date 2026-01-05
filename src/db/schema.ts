@@ -9,6 +9,7 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core'
 
+// Users table - core authentication and profile
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   email: varchar('email', { length: 255 }).notNull().unique(),
@@ -20,6 +21,7 @@ export const users = pgTable('users', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
+// Habits table - core habit definitions
 export const habits = pgTable('habits', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id')
@@ -34,6 +36,7 @@ export const habits = pgTable('habits', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
+// Habit entries - individual completions
 export const entries = pgTable('entries', {
   id: uuid('id').primaryKey().defaultRandom(),
   habitId: uuid('habit_id')
@@ -42,4 +45,13 @@ export const entries = pgTable('entries', {
   completionDate: timestamp('completion_date').defaultNow().notNull(),
   note: text('note'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
+})
+
+// Tags table - categorization system
+export const tags = pgTable('tags', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: varchar('name', { length: 50 }).notNull().unique(),
+  color: varchar('color', { length: 7 }).default('#6B7280'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })

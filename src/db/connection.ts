@@ -1,6 +1,6 @@
 import { remember } from '@epic-web/remember'
 import env, { isProd } from '../../env.ts'
-import * as schema from './schema.ts'
+import * as schema from './schema/index.ts'
 import { Pool } from 'pg'
 import { drizzle } from 'drizzle-orm/node-postgres'
 

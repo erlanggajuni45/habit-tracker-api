@@ -37,3 +37,11 @@ export const register = async (
     res.status(500).json({ error: 'Failed to create user' })
   }
 }
+
+export const login = async (req: Request, res: Response) => {
+  try {
+  } catch (e) {
+    console.error('Login error:', e)
+    res.status(500).json({ error: 'Failed to login' })
+  }
+}

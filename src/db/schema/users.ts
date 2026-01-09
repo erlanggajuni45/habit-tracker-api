@@ -26,3 +26,8 @@ export const createUserSchema = insertUserSchema.extend({
   email: z.email(),
   password: z.string().min(8),
 })
+
+export const loginUserSchema = z.object({
+  email: z.email('Invalid email format'),
+  password: z.string().min(1, 'Password is required'),
+})

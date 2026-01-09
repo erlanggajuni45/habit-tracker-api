@@ -1,4 +1,3 @@
-import { relations } from 'drizzle-orm'
 import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
 // Tags table - categorization system
@@ -9,10 +8,5 @@ export const tags = pgTable('tags', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
-
-// Tags can be on many habits
-export const tagsRelations = relations(tags, ({ many }) => ({
-  habits: many(tags),
-}))
 
 export type Tag = typeof tags.$inferSelect

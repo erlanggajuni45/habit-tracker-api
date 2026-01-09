@@ -1,6 +1,5 @@
 import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
 import { habits } from './habits.ts'
-import { relations } from 'drizzle-orm'
 
 // Habit entries - individual completions
 export const entries = pgTable('entries', {
@@ -12,13 +11,5 @@ export const entries = pgTable('entries', {
   note: text('note'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
-
-// Entries belong to one habit
-export const entriesRelations = relations(entries, ({ one }) => ({
-  habit: one(habits, {
-    fields: [entries.habitId],
-    references: [habits.id],
-  }),
-}))
 
 export type Entry = typeof entries.$inferSelect

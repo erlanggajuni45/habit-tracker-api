@@ -1,6 +1,4 @@
-import { relations } from 'drizzle-orm'
 import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
-import { habits } from './habits.ts'
 
 // Users table - core authentication and profile
 export const users = pgTable('users', {
@@ -13,11 +11,6 @@ export const users = pgTable('users', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
-
-// Users can have many habits
-export const userRelations = relations(users, ({ many }) => ({
-  habits: many(habits),
-}))
 
 export type User = typeof users.$inferSelect
 export type NewUser = typeof users.$inferInsert

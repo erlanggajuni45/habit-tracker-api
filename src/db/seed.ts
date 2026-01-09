@@ -1,3 +1,4 @@
+import { hashPassword } from '../utils/password.ts'
 import db from './connection.ts'
 import { entries } from './schema/entries.ts'
 import { habits } from './schema/habits.ts'
@@ -19,12 +20,14 @@ async function seed() {
 
     // Step 2: Create foundation data
     console.log('Creating demo users...')
+
+    const hashedPassword = await hashPassword('demo123')
     const [demoUser] = await db
       .insert(users)
       .values({
         email: 'demo@habittracker.com',
         username: 'demouser',
-        password: 'demo123',
+        password: hashedPassword,
         firstName: 'demo',
         lastName: 'user',
       })

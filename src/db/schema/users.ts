@@ -1,5 +1,6 @@
 import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import z from 'zod'
 
 // Users table - core authentication and profile
 export const users = pgTable('users', {
@@ -20,3 +21,8 @@ export type NewUser = typeof users.$inferInsert
 export const insertUserSchema = createInsertSchema(users)
 export const selectUserSchema = createSelectSchema(users)
 
+// Customize validation for email and password when creating user
+export const createUserSchema = insertUserSchema.extend({
+  email: z.email(),
+  password: z.string().min(8),
+})

@@ -1,4 +1,5 @@
 import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 // Users table - core authentication and profile
 export const users = pgTable('users', {
@@ -14,3 +15,8 @@ export const users = pgTable('users', {
 
 export type User = typeof users.$inferSelect
 export type NewUser = typeof users.$inferInsert
+
+// Generate zod schemas from Drizzle table
+export const insertUserSchema = createInsertSchema(users)
+export const selectUserSchema = createSelectSchema(users)
+

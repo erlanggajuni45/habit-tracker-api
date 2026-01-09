@@ -2,7 +2,7 @@ import { createSecretKey } from 'crypto'
 import env from '../../env.ts'
 import { SignJWT, type JWTPayload } from 'jose'
 
-export interface JwtPayload {
+export interface JwtPayload extends JWTPayload {
   id: string
   email: string
   username: string

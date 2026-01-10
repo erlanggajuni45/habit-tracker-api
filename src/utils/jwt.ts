@@ -1,6 +1,6 @@
 import { createSecretKey } from 'crypto'
 import env from '../../env.ts'
-import { SignJWT, type JWTPayload } from 'jose'
+import { jwtVerify, SignJWT, type JWTPayload } from 'jose'
 
 export interface JwtPayload extends JWTPayload {
   id: string
@@ -17,4 +17,15 @@ export const generateToken = (payload: JwtPayload): Promise<string> => {
     .setIssuedAt()
     .setExpirationTime(env.JWT_EXPIRES_IN || '7d')
     .sign(secretKey)
+}
+
+export const verifyToken = async (token: string): Promise<JwtPayload> => {
+  const secretKey = createSecretKey(env.JWT_SECRET, 'utf-8')
+  const { payload } = await jwtVerify(token, secretKey)
+
+  return {
+    id: payload.id as string,
+    email: payload.email as string,
+    username: payload.username as string,
+  }
 }
